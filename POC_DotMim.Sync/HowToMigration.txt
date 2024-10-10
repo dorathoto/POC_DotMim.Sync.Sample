@@ -1,0 +1,21 @@
+﻿in PMC - Package Manager Console
+
+# Master
+Add-Migration DBInitial -c MasterDbContext
+Update-Database -Context MasterDbContext
+
+ALTER DATABASE [SqlMaster]
+SET CHANGE_TRACKING = ON
+(CHANGE_RETENTION = 14 DAYS, AUTO_CLEANUP = ON)
+
+
+
+# Local
+Add-Migration DBInitial -c LocalDbContext
+Update-Database -Context LocalDbContext
+
+
+ALTER DATABASE [SqlLocal]
+SET CHANGE_TRACKING = ON
+(CHANGE_RETENTION = 14 DAYS, AUTO_CLEANUP = ON)
+
