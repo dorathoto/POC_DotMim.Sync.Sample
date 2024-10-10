@@ -43,12 +43,3 @@ The primary aim is to showcase the implementation of filtering within the DotMim
 * The `debugClean` flag in `SyncDatabases.SyncTest()` is for debugging purposes. In a production environment, you would likely implement more robust error handling and logging.
 * This example focuses on download-only synchronization. You can modify the `SyncDirection` in `SyncSetup` to enable other synchronization modes (e.g., bidirectional, upload-only).
 * Consider exploring more advanced features of DotMim.Sync, such as conflict resolution, custom providers, and different synchronization strategies, to tailor the solution to your specific needs.
-
-This README provides a basic overview of the project. You can expand it further by adding details about:
-
-* Installation instructions
-* Dependencies
-* Contributing guidelines
-* License information
-* Contact information
-* And any other relevant information for users or contributors.
