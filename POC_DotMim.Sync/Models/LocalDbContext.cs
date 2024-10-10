@@ -7,10 +7,7 @@ public class LocalDbContext : DbContext
 {
     private string? strConnLocal;
 
-    public LocalDbContext()
-    {
-
-    }
+    public LocalDbContext()   {}
     public LocalDbContext(string? strConnLocal)
     {
         this.strConnLocal = strConnLocal;
@@ -20,7 +17,7 @@ public class LocalDbContext : DbContext
     public DbSet<Tennant> Tennants { get; set; }
     public DbSet<Audio> Audios { get; set; }
     public DbSet<Led> Led { get; set; }
-    public DbSet<LedEffect> LedEffects { get; set; }
+    public DbSet<LedEffect> LedEffect { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,7 +31,6 @@ public class LocalDbContext : DbContext
 
             var _iconfiguration = builder.Build();
             strConnLocal = _iconfiguration.GetConnectionString("LocalConnection");
-
         }
         optionsBuilder.UseSqlServer(strConnLocal);
     }

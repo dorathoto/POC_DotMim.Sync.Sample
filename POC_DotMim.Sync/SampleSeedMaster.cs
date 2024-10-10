@@ -1,74 +1,67 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using POC_DotMim.Sync.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace POC_DotMim.Sync
+namespace POC_DotMim.Sync;
+
+public class SampleSeedMaster
 {
-    public class SampleSeedMaster
+
+    public MasterDbContext _context { get; set; }
+    public async Task SeedCreate(MasterDbContext context)
     {
 
-        public  MasterDbContext _context { get; set; }
-        public async Task SeedCreate(MasterDbContext context)
+        var myTennant = Program.MyTennantId;
+        this._context = context;
+
+        await Insert_Tennant(myTennant);      //by my tennant
+        await Insert_Tennant(Guid.NewGuid()); //random data
+    }
+
+    private async Task Insert_Tennant(Guid myTennant)
+    {
+        var exist = await _context.Tennants.AnyAsync(v => v.TennantId == myTennant);
+        if (!exist)
         {
-
-            var myTennant = Program.MyTennantId;
-            this._context = context;
-
-            Insert_Tennant(myTennant);      //by my tennant
-            Insert_Tennant(Guid.NewGuid()); //random data
-
-            Insert_Audio(myTennant);
-            Insert_Audio(Guid.NewGuid());
-
-            Insert_Led(myTennant);
-            Insert_Led(Guid.NewGuid());
-        }
-
-        private void Insert_Led(Guid myTennant)
-        {
-            var count = _context.Led.Count();
-            if (count < 2)
+            _context.Tennants.Add(new Models.Tennant
             {
-                var effect = new Models.LedEffect();
-                _context.LedEffects.Add(effect);
+                TennantId = myTennant
+            });
 
-                _context.Led.Add(new Models.Led
-                {
-                    TennantId = myTennant,
-                    LedEffect = effect
-                });
-                _context.SaveChanges();
-            }
-        }
-
-        private void Insert_Audio(Guid myTennant)
-        {
-            var count = _context.Audios.Count();
-            if (count < 2)
-            {
-                _context.Audios.Add(new Models.Audio
-                {
-                    TennantId = myTennant
-                });
-                _context.SaveChanges();
-            }
-        }
-
-        private void Insert_Tennant(Guid myTennantt)
-        {
-            var count = _context.Tennants.Count();
-            if (count < 2)
-            {
-                _context.Tennants.Add(new Models.Tennant
-                {
-                    TennantId = myTennantt
-                });
-                _context.SaveChanges();
-            }
+            await _context.SaveChangesAsync();
+            await Insert_Audio(myTennant);
+            await Insert_Led(myTennant);
+            await _context.SaveChangesAsync();
         }
     }
+
+    //------------------------------------------------------------------------------------
+
+    private async Task Insert_Audio(Guid myTennant)
+    {
+        var exist = await _context.Audios.AnyAsync(v => v.TennantId == myTennant);
+        if (!exist)
+        {
+            _context.Audios.Add(new Models.Audio
+            {
+                TennantId = myTennant
+            });
+        }
+    }
+
+    private async Task Insert_Led(Guid myTennant)
+    {
+        var exist = await _context.Led.AnyAsync(v => v.TennantId == myTennant);
+        if (!exist)
+        {
+            var effect = new Models.LedEffect();
+            _context.LedEffect.Add(effect);
+
+            _context.Led.Add(new Models.Led
+            {
+                TennantId = myTennant,
+                LedEffect = effect
+            });
+        }
+    }
+
 }

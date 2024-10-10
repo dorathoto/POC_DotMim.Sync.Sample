@@ -7,23 +7,17 @@ public class MasterDbContext : DbContext
 {
     private string? strConn;
 
-    public MasterDbContext()
-    {
+    public MasterDbContext() { }
 
-    }
     public MasterDbContext(string? strConn)
     {
         this.strConn = strConn;
     }
 
-
-
     public DbSet<Tennant> Tennants { get; set; }
     public DbSet<Audio> Audios { get; set; }
     public DbSet<Led> Led { get; set; }
-    public DbSet<LedEffect> LedEffects { get; set; }
-
-
+    public DbSet<LedEffect> LedEffect { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,9 +31,7 @@ public class MasterDbContext : DbContext
 
             var _iconfiguration = builder.Build();
             strConn = _iconfiguration.GetConnectionString("MasterConnection");
-
         }
         optionsBuilder.UseSqlServer(strConn);
     }
-
 }
