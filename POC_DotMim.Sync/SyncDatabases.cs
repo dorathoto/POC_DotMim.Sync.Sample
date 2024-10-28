@@ -46,12 +46,12 @@ internal class SyncDatabases
 
             var agent = new SyncAgent(clientProvider, serverProvider, syncOptions);
 
-            var setup = new SyncSetup("dbo.Tennants", "dbo.Audios", "dbo.Led", "dbo.LedEffect");
+            var setup = new SyncSetup("Tennants", "Audios", "Led", "LedEffect");
 
-            setup.Tables["dbo.Tennants"].SyncDirection = SyncDirection.DownloadOnly;
-            setup.Tables["dbo.Audios"].SyncDirection = SyncDirection.DownloadOnly;
-            setup.Tables["dbo.Led"].SyncDirection = SyncDirection.DownloadOnly;
-            setup.Tables["dbo.LedEffect"].SyncDirection = SyncDirection.DownloadOnly;
+            setup.Tables["Tennants"].SyncDirection = SyncDirection.DownloadOnly;
+            setup.Tables["Audios"].SyncDirection = SyncDirection.DownloadOnly;
+            setup.Tables["Led"].SyncDirection = SyncDirection.DownloadOnly;
+            setup.Tables["LedEffect"].SyncDirection = SyncDirection.DownloadOnly;
 
 
             //FILTER
